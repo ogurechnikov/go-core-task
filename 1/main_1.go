@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha256"
 	"fmt"
 )
 
@@ -15,37 +16,25 @@ var (
 )
 
 func main() {
-	printType(numDecimal)
-	printType(numOctal)
-	printType(numHexadecimal)
-	printType(pi)
-	printType(name)
-	printType(isActive)
-	printType(complexNum)
+	fmt.Println("numDecimal", getType(numDecimal))
+	fmt.Println("numOctal", getType(numOctal))
+	fmt.Println("numHexadecimal", getType(numHexadecimal))
+	fmt.Println("pi", getType(pi))
+	fmt.Println("name", getType(name))
+	fmt.Println("isActive", getType(isActive))
+	fmt.Println("complexNum", getType(complexNum))
 
+	fmt.Println(mergeToString())
+
+	runes := []rune(mergeToString())
+	fmt.Println(runes)
+
+	hashslice := createHash(runes, "go-2024")
+	fmt.Println(hashslice)
 }
 
-func printType(value any) {
-	switch v := value.(type) {
-	case int:
-		if v == numHexadecimal {
-			fmt.Printf("Тип: int, Значение: %x\n", v)
-		} else if v == numOctal {
-			fmt.Printf("Тип: int, Значение: %o\n", v)
-		} else {
-			fmt.Printf("Тип: int, Значение: %d\n", v)
-		}
-	case float64:
-		fmt.Printf("Тип: float64, Значение: %f\n", v)
-	case string:
-		fmt.Printf("Тип: string, Значение: %s\n", v)
-	case bool:
-		fmt.Printf("Тип: bool, Значение: %t\n", v)
-	case complex64:
-		fmt.Printf("Тип: complex64, Значение: %v\n", v)
-	default:
-		fmt.Printf("Тип: %T, Значение: %v\n", v, v)
-	}
+func getType(value any) string {
+	return fmt.Sprintf("%T", value)
 }
 
 func mergeToString() string {
@@ -56,4 +45,14 @@ func mergeToString() string {
 		str += fmt.Sprintf("%v", item)
 	}
 	return str
+}
+
+func createHash(runes []rune, salt string) string {
+	runeStr := string(runes)
+	mid := len(runeStr) / 2
+	hashStr := runeStr[:mid] + salt + runeStr[mid:]
+
+	hash := sha256.New()
+	hash.Write([]byte(hashStr))
+	return fmt.Sprintf("%x", hash.Sum(nil))
 }
