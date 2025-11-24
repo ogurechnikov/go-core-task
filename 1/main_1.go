@@ -2,13 +2,15 @@ package main
 
 import "fmt"
 
-var numDecimal int = 42
-var numOctal int = 052
-var numHexadecimal int = 0x2A
-var pi float64 = 3.14
-var name string = "Golang"
-var isActive bool = true
-var complexNum complex64 = 1 + 2i
+var (
+	numDecimal     int       = 42
+	numOctal       int       = 052
+	numHexadecimal int       = 0x2A
+	pi             float64   = 3.14
+	name           string    = "Golang"
+	isActive       bool      = true
+	complexNum     complex64 = 1 + 2i
+)
 
 func main() {
 	printType(numDecimal)
@@ -18,6 +20,8 @@ func main() {
 	printType(name)
 	printType(isActive)
 	printType(complexNum)
+
+	mergeToString()
 }
 
 func printType(value any) {
@@ -35,4 +39,14 @@ func printType(value any) {
 	default:
 		fmt.Printf("Тип: %T, Значение: %v\n", v, v)
 	}
+}
+
+func mergeToString() {
+	data := []any{numDecimal, numOctal, numHexadecimal, pi, name, isActive, complexNum}
+
+	var str string
+	for _, item := range data {
+		str += fmt.Sprintf("%v", item)
+	}
+	fmt.Println(str)
 }
