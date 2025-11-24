@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 var (
 	numDecimal     int       = 42
@@ -21,13 +23,18 @@ func main() {
 	printType(isActive)
 	printType(complexNum)
 
-	mergeToString()
 }
 
 func printType(value any) {
 	switch v := value.(type) {
 	case int:
-		fmt.Printf("Тип: int, Значение: %d\n", v)
+		if v == numHexadecimal {
+			fmt.Printf("Тип: int, Значение: %x\n", v)
+		} else if v == numOctal {
+			fmt.Printf("Тип: int, Значение: %o\n", v)
+		} else {
+			fmt.Printf("Тип: int, Значение: %d\n", v)
+		}
 	case float64:
 		fmt.Printf("Тип: float64, Значение: %f\n", v)
 	case string:
@@ -41,12 +48,12 @@ func printType(value any) {
 	}
 }
 
-func mergeToString() {
+func mergeToString() string {
 	data := []any{numDecimal, numOctal, numHexadecimal, pi, name, isActive, complexNum}
 
 	var str string
 	for _, item := range data {
 		str += fmt.Sprintf("%v", item)
 	}
-	fmt.Println(str)
+	return str
 }
