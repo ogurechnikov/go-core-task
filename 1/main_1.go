@@ -1,38 +1,58 @@
 package main
 
-import "fmt"
+import (
+	"crypto/sha256"
+	"fmt"
+)
 
-var numDecimal int = 42
-var numOctal int = 052
-var numHexadecimal int = 0x2A
-var pi float64 = 3.14
-var name string = "Golang"
-var isActive bool = true
-var complexNum complex64 = 1 + 2i
+var (
+	numDecimal     int       = 42
+	numOctal       int       = 052
+	numHexadecimal int       = 0x2A
+	pi             float64   = 3.14
+	name           string    = "Golang"
+	isActive       bool      = true
+	complexNum     complex64 = 1 + 2i
+)
 
 func main() {
-	printType(numDecimal)
-	printType(numOctal)
-	printType(numHexadecimal)
-	printType(pi)
-	printType(name)
-	printType(isActive)
-	printType(complexNum)
+	fmt.Println("numDecimal", getType(numDecimal))
+	fmt.Println("numOctal", getType(numOctal))
+	fmt.Println("numHexadecimal", getType(numHexadecimal))
+	fmt.Println("pi", getType(pi))
+	fmt.Println("name", getType(name))
+	fmt.Println("isActive", getType(isActive))
+	fmt.Println("complexNum", getType(complexNum))
+
+	fmt.Println(mergeToString())
+
+	runes := []rune(mergeToString())
+	fmt.Println(runes)
+
+	hashslice := createHash(runes, "go-2024")
+	fmt.Println(hashslice)
 }
 
-func printType(value any) {
-	switch v := value.(type) {
-	case int:
-		fmt.Printf("Тип: int, Значение: %d\n", v)
-	case float64:
-		fmt.Printf("Тип: float64, Значение: %f\n", v)
-	case string:
-		fmt.Printf("Тип: string, Значение: %s\n", v)
-	case bool:
-		fmt.Printf("Тип: bool, Значение: %t\n", v)
-	case complex64:
-		fmt.Printf("Тип: complex64, Значение: %v\n", v)
-	default:
-		fmt.Printf("Тип: %T, Значение: %v\n", v, v)
+func getType(value any) string {
+	return fmt.Sprintf("%T", value)
+}
+
+func mergeToString() string {
+	data := []any{numDecimal, numOctal, numHexadecimal, pi, name, isActive, complexNum}
+
+	var str string
+	for _, item := range data {
+		str += fmt.Sprintf("%v", item)
 	}
+	return str
+}
+
+func createHash(runes []rune, salt string) string {
+	runeStr := string(runes)
+	mid := len(runeStr) / 2
+	hashStr := runeStr[:mid] + salt + runeStr[mid:]
+
+	hash := sha256.New()
+	hash.Write([]byte(hashStr))
+	return fmt.Sprintf("%x", hash.Sum(nil))
 }
