@@ -18,7 +18,7 @@ func main() {
 	ms := sliceExample(originalSlice)
 	fmt.Println("Modified Slice:", ms)
 
-	ns := addElements(originalSlice, 100)
+	ns := addElements(originalSlice)
 	fmt.Println("Added Elements:", ns)
 }
 
@@ -32,7 +32,8 @@ func sliceExample(s []int) []int {
 	return ms
 }
 
-func addElements(s []int, c int) []int {
+func addElements(s []int) []int {
+	c := rand.Intn(100)
 	ns := append(s, c)
 	return ns
 }
