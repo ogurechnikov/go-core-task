@@ -15,17 +15,18 @@ func main() {
 
 	fmt.Println("Original Slice:", originalSlice)
 
-	fmt.Println("Modified Slice:", sliceExample(originalSlice))
+	ms := sliceExample(originalSlice)
+	fmt.Println("Modified Slice:", ms)
 
 	ns := addElements(originalSlice, 100)
 	fmt.Println("Added Elements:", ns)
 }
 
-func sliceExample(slice []int) []int {
+func sliceExample(s []int) []int {
 	var ms []int
-	for i := range slice {
-		if slice[i]%2 == 0 {
-			ms = append(ms, slice[i])
+	for i := range s {
+		if s[i]%2 == 0 {
+			ms = append(ms, s[i])
 		}
 	}
 	return ms
