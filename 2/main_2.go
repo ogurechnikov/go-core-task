@@ -16,6 +16,9 @@ func main() {
 	fmt.Println("Original Slice:", originalSlice)
 
 	fmt.Println("Modified Slice:", sliceExample(originalSlice))
+
+	ns := addElements(originalSlice, 100)
+	fmt.Println("Added Elements:", ns)
 }
 
 func sliceExample(slice []int) []int {
@@ -26,4 +29,9 @@ func sliceExample(slice []int) []int {
 		}
 	}
 	return ms
+}
+
+func addElements(s []int, c int) []int {
+	ns := append(s, c)
+	return ns
 }
