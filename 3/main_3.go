@@ -28,6 +28,9 @@ func main() {
 
 	fmt.Println(m.Exist("мама"))
 	fmt.Println(m.Exist("собака"))
+
+	fmt.Println(m.Get("мама"))
+	fmt.Println(m.Get("собака"))
 }
 
 func (s StringIntMap) Add(key string, value int) {
@@ -53,4 +56,9 @@ func (s StringIntMap) Copy() StringIntMap {
 func (s StringIntMap) Exist(key string) bool {
 	_, ok := s[key]
 	return ok
+}
+
+func (s StringIntMap) Get(key string) (int, bool) {
+	value, ok := s[key]
+	return value, ok
 }
