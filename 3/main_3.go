@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"maps"
 )
 
 type StringIntMap map[string]int
@@ -17,6 +18,13 @@ func main() {
 
 	m.Remove("папа")
 	fmt.Println("StringIntMap после удаления:", m)
+
+	cm := m.Copy()
+	fmt.Println("Копия StringIntMap:", cm)
+
+	m.Add("бабушка", 4)
+	fmt.Println("Оригинал(проверка):", m)
+	fmt.Println("Копия(проверка):", cm)
 }
 
 func (s StringIntMap) Add(key string, value int) {
@@ -25,4 +33,16 @@ func (s StringIntMap) Add(key string, value int) {
 
 func (s StringIntMap) Remove(key string) {
 	delete(s, key)
+}
+
+func (s StringIntMap) Copy() StringIntMap {
+	cm := make(StringIntMap)
+	// Подкапотный способ
+	// for key, value := range s {
+	// 	cm[key] = value
+	// }
+
+	// Современный способ
+	maps.Copy(cm, s)
+	return cm
 }
