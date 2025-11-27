@@ -4,14 +4,18 @@ import (
 	"fmt"
 )
 
-var StringIntMap = map[string]int{}
+type StringIntMap map[string]int
 
 func main() {
-	Add("мама", 1)
-	Add("папа", 2)
-	fmt.Println(StringIntMap)
+
+	m := StringIntMap{}
+
+	m.Add("мама", 1)
+	m.Add("папа", 2)
+	m.Add("дедушка", 3)
+	fmt.Println("StringIntMap после добавления:", m)
 }
 
-func Add(key string, value int) {
-	StringIntMap[key] = value
+func (s StringIntMap) Add(key string, value int) {
+	s[key] = value
 }
