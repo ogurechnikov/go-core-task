@@ -25,6 +25,9 @@ func main() {
 	m.Add("бабушка", 4)
 	fmt.Println("Оригинал(проверка):", m)
 	fmt.Println("Копия(проверка):", cm)
+
+	fmt.Println(m.Exist("мама"))
+	fmt.Println(m.Exist("собака"))
 }
 
 func (s StringIntMap) Add(key string, value int) {
@@ -45,4 +48,9 @@ func (s StringIntMap) Copy() StringIntMap {
 	// Современный способ
 	maps.Copy(cm, s)
 	return cm
+}
+
+func (s StringIntMap) Exist(key string) bool {
+	_, ok := s[key]
+	return ok
 }
