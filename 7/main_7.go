@@ -10,8 +10,8 @@ func main() {
 	ch1 := make(chan int)
 	ch2 := make(chan int)
 
-	go generateNumbers(10, ch1)
-	go generateNumbers(10, ch2)
+	go generateNumbers(3, ch1)
+	go generateNumbers(1, ch2)
 
 	merged := mergeChannels([]<-chan int{ch1, ch2})
 
@@ -38,14 +38,15 @@ func mergeChannels(channels []<-chan int) <-chan int {
 	go func() {
 		for _, v := range channels {
 			go func(v <-chan int) {
+				defer wg.Done()
 				for val := range v {
 					merged <- val
 				}
-				wg.Done()
 			}(v)
 		}
 		wg.Wait()
 		close(merged)
 	}()
+
 	return merged
 }
